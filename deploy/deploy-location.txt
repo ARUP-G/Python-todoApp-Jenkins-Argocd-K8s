@@ -1,0 +1,5 @@
+ To get the deployment files
+    1. deploy.yaml
+    2. service.yaml
+
+Go to - https://github.com/ARUP-G/Todo-app-deployment-manifest
