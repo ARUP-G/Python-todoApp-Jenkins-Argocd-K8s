@@ -5,6 +5,6 @@
 - Python (3.9) - Programming language for the todo application
 - Django - Python web framework 
 
-![TodoApp snapshot](images\todoApp.png)
+![TodoApp snapshot](images/todoApp.png)
 
 ## Deployment
