@@ -59,6 +59,8 @@ pipeline {
                 script{
                     withCredentials([string(credentialsId: 'jenkins-todo', variable: 'GITHUB_TOKEN')]) {
                         sh '''
+                        git config user.email "darup2019.xyz@gmail.com"
+                        git config user.name "Arup"
                         cd deploy
                         cat deploy.yaml
                         sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deploy.yaml
