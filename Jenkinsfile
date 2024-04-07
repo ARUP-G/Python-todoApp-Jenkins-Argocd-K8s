@@ -29,6 +29,7 @@ pipeline {
 
         stage('Push the artifacts'){
            steps{
+                docker credentialsId: "docker-cred"
                 script{
                     sh '''
                     echo 'Push to Repo'
