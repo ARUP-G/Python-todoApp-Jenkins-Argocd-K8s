@@ -29,8 +29,7 @@ pipeline {
 
         stage('Push the artifacts'){
            steps{
-                docker credentialsId: "docker-cred"
-                script{
+                withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]){
                     sh '''
                     echo 'Push to Repo'
                     docker push ard3dk/todoapp:${BUILD_NUMBER}
