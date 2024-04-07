@@ -28,12 +28,16 @@ pipeline {
         }
 
         stage('Push the artifacts'){
-           steps{
-                withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]){
-                    sh '''
-                    echo 'Push to Repo'
-                    docker push ard3dk/todoapp:${BUILD_NUMBER}
-                    '''
+           environment {
+                DOCKER_IMAGE = "ard3dk/todoapp:${BUILD_NUMBER}"
+                REGISTRY_CREDENTIALS = credentials('docker-cred')
+            }
+            steps{
+                script{
+                    def dockerImage = docker.image("${DOCKER_IMAGE}")
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-cred"){
+                        dockerImage.push()
+                    }
                 }
             }
         }
