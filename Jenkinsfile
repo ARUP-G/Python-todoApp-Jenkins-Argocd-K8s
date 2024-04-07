@@ -55,6 +55,7 @@ pipeline {
                 script{
                     withCredentials([string(credentialsId: 'jenkins-todo', variable: 'GITHUB_TOKEN')]) {
                         sh '''
+                        cd deploy
                         cat deploy.yaml
                         sed -i '' "s/32/${BUILD_NUMBER}/g" deploy.yaml
                         cat deploy.yaml
