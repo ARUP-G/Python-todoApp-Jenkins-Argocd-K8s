@@ -51,6 +51,10 @@ pipeline {
         }
         
         stage('Update K8S manifest & push to Repo'){
+            environment {
+                    GIT_REPO_NAME = "Todo-app-deployment-manifest"
+                    GIT_USER_NAME = "ARUP-G"
+                    }
             steps {
                 script{
                     withCredentials([string(credentialsId: 'jenkins-todo', variable: 'GITHUB_TOKEN')]) {
