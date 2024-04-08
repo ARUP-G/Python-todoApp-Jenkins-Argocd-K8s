@@ -10,8 +10,7 @@ pipeline {
         
         stage('Checkout'){
            steps {
-                git credentialsId: 'jenkins-todo', 
-                url: 'https://github.com/ARUP-G/Python-todoApp-Jenkins-Argocd-K8s',
+                git url: 'https://github.com/ARUP-G/Python-todoApp-Jenkins-Argocd-K8s',
                 branch: 'main'
            }
         }
@@ -44,8 +43,7 @@ pipeline {
         
         stage('Checkout K8S manifest SCM'){
             steps {
-                git credentialsId: 'jenkins-todo', 
-                url: 'https://github.com/ARUP-G/Todo-app-deployment-manifest',
+                git url: 'https://github.com/ARUP-G/Todo-app-deployment-manifest',
                 branch: 'main'
             }
         }
@@ -57,18 +55,18 @@ pipeline {
                     }
             steps {
                 script{
-                    withCredentials([string(credentialsId: 'jenkins-todo', variable: 'GITHUB_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'todo-git', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                         git config user.email "darup2019.xyz@gmail.com"
-                        git config user.name "Arup"
+                        git config user.name "ARUP-G"
                         cd deploy
                         cat deploy.yaml
                         sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deploy.yaml
                         cat deploy.yaml
                         git add deploy.yaml
-                        git commit -m 'Updated the deploy yaml | Jenkins Pipeline'
+                        git commit -m 'Updated the deploy yaml| Build numbre ${BUILD_NUMBER} | Jenkins Pipeline'
                         git remote -v
-                        git push https://github.com/ARUP-G/Todo-app-deployment-manifest-repo.git HEAD:main
+                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                         '''                        
                     }
                 }
